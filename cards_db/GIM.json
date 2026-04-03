@@ -437,17 +437,11 @@
         "is_choice": true,
         "choices": [
           {
-            "label": "CXコンボ: 1点バーンのみ (削底効果を発動しない)",
-            "instructions": [
-              {
-                "op": "Burn",
-                "amount": 1,
-                "times": 1
-              }
-            ]
+            "label": "不发动CX连击",
+            "instructions": []
           },
           {
-            "label": "CXコンボ: バーン1 + 削底1 (思い出2枚)",
+            "label": "发动CX连击 (烧1, 扒底[思出-1]张, 若含CX追烧1)",
             "instructions": [
               {
                 "op": "Burn",
@@ -458,64 +452,10 @@
                 "op": "MillAndBurn",
                 "target_player": "opp",
                 "zone": "bottom",
-                "mill_amount": 1,
-                "condition": "is_cx",
-                "mode": "once_if_any",
-                "burn_amount": 1
-              }
-            ]
-          },
-          {
-            "label": "CXコンボ: バーン1 + 削底2 (思い出3枚)",
-            "instructions": [
-              {
-                "op": "Burn",
-                "amount": 1,
-                "times": 1
-              },
-              {
-                "op": "MillAndBurn",
-                "target_player": "opp",
-                "zone": "bottom",
-                "mill_amount": 2,
-                "condition": "is_cx",
-                "mode": "once_if_any",
-                "burn_amount": 1
-              }
-            ]
-          },
-          {
-            "label": "CXコンボ: バーン1 + 削底3 (思い出4枚)",
-            "instructions": [
-              {
-                "op": "Burn",
-                "amount": 1,
-                "times": 1
-              },
-              {
-                "op": "MillAndBurn",
-                "target_player": "opp",
-                "zone": "bottom",
-                "mill_amount": 3,
-                "condition": "is_cx",
-                "mode": "once_if_any",
-                "burn_amount": 1
-              }
-            ]
-          },
-          {
-            "label": "CXコンボ: バーン1 + 削底4 (思い出5枚以上)",
-            "instructions": [
-              {
-                "op": "Burn",
-                "amount": 1,
-                "times": 1
-              },
-              {
-                "op": "MillAndBurn",
-                "target_player": "opp",
-                "zone": "bottom",
-                "mill_amount": 4,
+                "mill_amount": {
+                  "base": "player_memory",
+                  "modifier": -1
+                },
                 "condition": "is_cx",
                 "mode": "once_if_any",
                 "burn_amount": 1
@@ -523,9 +463,7 @@
             ]
           }
         ]
-      }
-    ]
-  },
+      },
   {
     "name": "学園生活 藤田ことねガクエンセイカツ フジタコトネ",
     "code": "GIM/W124-T05",
