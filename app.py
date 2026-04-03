@@ -761,23 +761,34 @@ class GameEngine:
 # ==========================================
 # 2. 数据处理：极简版卡牌构造器 (支持用户手动多选)
 # ==========================================
+
+DB_DIR = "cards_db"  # 🌟 指向我们刚才新建的拆分卡牌文件夹
+
 @st.cache_data
 def load_db():
-    if not os.path.exists("cards.json"): 
+    if not os.path.exists(DB_DIR): 
+        print(f"⚠️ 找不到数据库文件夹: {DB_DIR}")
         return {}
-    try:
-        with open("cards.json", "r", encoding="utf-8") as f:
-            data = json.load(f)
-        
-        db = {}
-        for item in data:
-            code = item.get("code", "???")
-            name = item.get("name", "Unknown")
-            display_key = f"[{code}] {name}"
-            db[display_key] = item
-        return db
-    except Exception:
-        return {}
+    
+    db = {}
+    # 🌟 遍历文件夹下的所有 .json 文件
+    for filename in os.listdir(DB_DIR):
+        if filename.endswith(".json"):
+            filepath = os.path.join(DB_DIR, filename)
+            try:
+                with open(filepath, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                
+                # 把读取到的卡牌加入到内存总字典中
+                for item in data:
+                    code = item.get("code", "???")
+                    name = item.get("name", "Unknown")
+                    display_key = f"[{code}] {name}"
+                    db[display_key] = item
+            except Exception as e:
+                print(f"❌ 读取文件 {filename} 时出错: {e}")
+                
+    return db
 
 RAW_DB = load_db()
 CARD_OPTIONS = ["无 (Empty)"] + list(RAW_DB.keys())
